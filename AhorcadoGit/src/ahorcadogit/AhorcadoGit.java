@@ -20,32 +20,68 @@ public class AhorcadoGit {
         //comienzo ahorcado
             System.out.println("******************* AHORCADO *******************");
         String letra;
-        int aux= palabra.length();
-        int contador=8;
-       //bucle
-        while ((contador>=0)&&(ganarPartida(vacierto,vpalabra)==false)){
         
+        int contador=7;
+       //bucle
+        while ((contador>0)&&(ganarPartida(vacierto,vpalabra)==false)){
+        //for (int i=0;i<verror.length;i++){
         //muestra el dibujo para que sepa por donde va    
             mostrarDibujo(contador);
             System.out.println("VIDAS: "+ contador);
         //mostrar vector acierto
             mostrarAcierto(palabra, vacierto);
-            
-        //pregunta letra al jugador            
+        
+        
+        //pregunta letra al jugador  
+        System.out.println("");
+        System.out.println("");
         System.out.println("Escribe una única letra: ");
         letra=leer.next();
-            
+           
+       //muestra vector verror las letras erroneas que vas introduciendo
+        muestraError(verror);
+                System.out.println("");
+                System.out.println(""); 
         //comprueba si letra esta en la matriz palabra para acertar o fallar
-            if (buscarLetra(vpalabra, vacierto, letra)==false){
+            if (buscarLetra(vpalabra, vacierto, verror, letra)==false){
+            //recorro verror guardando letra erronea
                 
+               // verror[i]=letra;
                 contador--;
-            }
+            } 
+            
+         //}
         }
+        
+        if (ganarPartida(vacierto,vpalabra)==true){
         System.out.println("La palabra es: ");
-         mostrarAcierto(palabra, vacierto);
-         System.out.println(" ");
-         System.out.println("¡HAS GANADO!");
+        mostrarPalabra(palabra, vpalabra);
+        
+        System.out.println(" ");
+        System.out.println("¡HAS GANADO!");
+        } else{
+        System.out.println("   _ _ _       ");
+                System.out.println("  |/    |      ");
+                System.out.println("  |     0      ");
+                System.out.println("  |   /ºº/     ");
+                System.out.println("  |     |      ");
+                System.out.println("  |    / /     ");
+                System.out.println("  |            ");
+                System.out.println("---------------");
+                System.out.println("---------------");
+                System.out.println("  HAS PERDIDO  ");
+        }
     }
+    
+   
+    
+   public static void iniciarErrores(String verror[]){
+        for (int i=0;i<verror.length;i++){
+                 if (verror[i]==null){
+                     verror[i]=" - ";
+                 }
+        }
+   }
     
    public static boolean ganarPartida(String vacierto[], String vpalabra[]){
        boolean ganado = true;
@@ -61,19 +97,34 @@ public class AhorcadoGit {
        return ganado;
    }
     
-   public static boolean buscarLetra(String vpalabra[], String vacierto[], String letra){
+   public static boolean buscarLetra(String vpalabra[], String vacierto[],String verror[], String letra){
        boolean encontrado = false;
        
        for (int i=0;i<vpalabra.length;i++){
            if(letra.equalsIgnoreCase(vpalabra[i])){
-               encontrado = true;
                vacierto[i]=letra;
+               encontrado = true;    
            }
        }
        return encontrado;
    }
     
+   public static void muestraError (String verror[]) {
+       System.out.println("");
+       System.out.println("");
+       System.out.println("Letras erroneas introducidas: ");
     
+       for (int i=0;i<verror.length;i++){
+           if (verror[i]!=null){
+           System.out.print(verror[i]+" --> ");
+           }
+//if(verror[i]==null){
+           //    huecolibre=i;
+               
+          // } 
+       }
+      // System.out.println("estamos introduciendo la letra "+letra+" en el vector error en la posicion "+huecolibre);
+   } 
    
     
     public static void iniciarAciertos(String vacierto[],String palabra){
@@ -106,24 +157,34 @@ public class AhorcadoGit {
             System.out.print(vacierto[i]+" "); 
             
         }
+    }
+    
+    public static void mostrarPalabra(String palabra,String vpalabra[]){
+        
+        
+        for (int i=0;i<palabra.length();i++){
+            System.out.print(vpalabra[i]+" "); 
+            
+        }
         
     }
     public static void mostrarDibujo(int contador){
       
         switch(contador){
-            case 0:
-        System.out.println("   _ _ _       ");
-        System.out.println("  |/    |      ");
-        System.out.println("  |     0      ");
-        System.out.println("  |   /ºº/     ");
-        System.out.println("  |     |      ");
-        System.out.println("  |    / /     ");
-        System.out.println("  |            ");
-        System.out.println("---------------");
-        System.out.println("---------------");
-        System.out.println("  HAS PERDIDO  ");
-             break;
-            
+           
+           
+            /*case 0:
+                System.out.println("   _ _ _       ");
+                System.out.println("  |/    |      ");
+                System.out.println("  |     0      ");
+                System.out.println("  |   /ºº/     ");
+                System.out.println("  |     |      ");
+                System.out.println("  |    / /     ");
+                System.out.println("  |            ");
+                System.out.println("---------------");
+                System.out.println("---------------");
+                System.out.println("  HAS PERDIDO  ");
+                break;*/
             case 1:
                 System.out.println("   _ _ _       ");
                 System.out.println("  |/    |      ");
@@ -178,7 +239,7 @@ public class AhorcadoGit {
                 System.out.println("  |            ");
                 System.out.println("---------------");
                 System.out.println("---------------");
-                break;
+                        break;
             case 6:
                 System.out.println("   _ _ _       ");
                 System.out.println("  |/           ");
@@ -189,7 +250,7 @@ public class AhorcadoGit {
                 System.out.println("  |            ");
                 System.out.println("---------------");
                 System.out.println("---------------");
-                        break;
+                break;
             case 7:
                 System.out.println("               ");
                 System.out.println("  |            ");
@@ -217,15 +278,17 @@ public class AhorcadoGit {
     }
     
     public static void main(String[] args) {
-         String palabra="leche";
+         String palabra="sobaco";
         // declarar vectores para la palabra escogida
        // para la palabra con sus aciertos
        // y para las letras erroneas
        
         String vpalabra []= new String [palabra.length()];
         String vacierto []= new String [palabra.length()];
-        String verror []= new String [8];
+        String verror []= new String [7];
         
+        
+       //iniciarErrores(verror);
        separaPalabra(vpalabra, palabra);
        iniciarAciertos(vacierto, palabra);
        partida(vpalabra, verror, vacierto, palabra);
